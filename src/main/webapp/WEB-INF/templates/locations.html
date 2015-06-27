@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Its Tyhme For Some Audio Schedules!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/stsm.css" th:href="@{/css/stsm.css}"/>
+</head>
+
+<body>
+
+<div class="seedstarterlist" th:switch="${#lists.isEmpty(user.locations)}" >
+    <h2>User Locations</h2>
+
+    <p th:case="${true}">There are no locations. Click the "Add Location" button</p>
+    <table th:case="${false}">
+        <thead>
+            <tr>
+                <th>Location Name</th>
+                <th>Current Date</th>
+                <th>Audio Mix</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="loc : ${user.locations}">
+                <td th:text="${loc.name}">A location</td>
+                <td th:text="${{loc.getEarliestDate()}}">13/01/2015</td>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr th:each="audioMixValue : ${loc.getEarliestSchedule().audioMix}">
+                            <td th:text="${audioMixValue.audioMixType.name}">ROck</td>
+                            <td th:text="${audioMixValue.value}">0.50</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td>
+                    <a th:href="@{/singlelocation/update(locationName=${loc.name})}">Edit</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- do i need this second div? i don't know... -->
+<div>
+    <form action="locations.html" th:action="@{/locations}" th:object="${user}" method="post">
+        <div class="submit">
+            <button type="submit" name="add">Add Location</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

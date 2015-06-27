@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Spring Thyme Seed Starter Manager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/stsm.css" th:href="@{/css/stsm.css}"/>
+</head>
+
+<body>
+
+<div>
+
+    <!--<h2 th:text="#{title.new}">Add new Seed Starter</h2>-->
+
+    <form action="#" th:action="@{/singlelocation}" th:object="${newSchedule}" method="post">
+
+        <fieldset>
+
+            <legend>Location Information</legend>
+
+            <!-- can i somehow get at this fields error class and add something in here? probably -->
+            <!--<ul th:if="${#fields.hasErrors('*')}" class="errorlist">-->
+                <!--<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>-->
+            <!--</ul>-->
+
+
+            <!-- only let the user set the location name when it has not been set yet -->
+            <!-- th:unless="${newLocation} == null" -->
+            <div>
+                <label>Location Name</label>
+                <input type="text" name="locationName" th:value="${newLocation.name}" />
+                <input type="hidden" name="locationId" th:value="${newLocation.id}" />
+            </div>
+            <div>
+                <label for="scheduleDate">
+                    <span th:text="#{seedstarter.datePlanted}">Date scheduled</span>
+                    (<span th:text="#{date.format}">YYYY/MM/DD</span>)
+                </label>
+                <input type="text" th:field="*{scheduleDate}" th:errorclass="fieldError"/>
+            </div>
+            <div>
+                <label>Audio Mix</label>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Music Genre</th>
+                        <th>Value</th>
+                        <th>
+                            <button type="submit" name="addGenre">Add Genre</button>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="musicGenre, rowStat : *{audioMix}">
+                            <td>
+                                <select th:field="*{audioMix[__${rowStat.index}__].audioMixType}">
+                                    <option th:each="genre : ${allGenres}" th:value="${genre}" th:text="${genre}">Rock</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" th:field="*{{audioMix[__${rowStat.index}__].value}}" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="submit">
+                <button type="submit" name="save">Save Location</button>
+            </div>
+
+        </fieldset>
+
+    </form>
+
+</div>
+
+</body>
+</html>

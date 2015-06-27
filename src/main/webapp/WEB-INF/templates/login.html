@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Spring Thyme Seed Starter Manager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/stsm.css" th:href="@{/css/stsm.css}"/>
+</head>
+
+<body>
+
+<div>
+    <img src="../../images/stsmlogo.png" alt="STSM logo" title="STSM logo"
+         th:src="@{/images/stsmlogo.png}" th:alt-title="#{title.application}"/>
+</div>
+
+<div>
+
+    <form action="seedstartermng.html" th:action="@{/login}"  th:object="${user}" method="post">
+        <!-- to do: add the error thing as well -->
+        <fieldset>
+            <br><input type="text" th:field="*{userName}" /></br>
+            <br><input type="password" th:field="*{password}" /></br>
+
+            <div class="submit">
+                <button type="submit" name="save">Log In</button>
+            </div>
+        </fieldset>
+    </form>
+
+</div>
+
+</body>
+</html>
